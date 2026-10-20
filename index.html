@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Majdoor Saathi</title>
+<style>
+body{font-family:Arial,sans-serif;margin:0;background:#f1f5f9;color:#222}
+header{background:#087443;color:white;padding:22px 15px;text-align:center}
+header h1{margin:0}
+.container{padding:16px;max-width:600px;margin:auto}
+.card{background:white;padding:16px;border-radius:12px;margin:14px 0;box-shadow:0 2px 8px #ddd}
+input,select,textarea,button{box-sizing:border-box;width:100%;padding:12px;margin:7px 0;border:1px solid #ccc;border-radius:7px;font-size:16px}
+button{background:#087443;color:white;border:0;font-weight:bold}
+.job{border-left:5px solid #087443}
+.small{color:#555;font-size:14px}
+</style>
+</head>
+<body>
+<header>
+<h1>🤝 मजदूर साथी</h1>
+<p>काम ढूँढें, काम देने वाले से जुड़ें</p>
+</header>
+<div class="container">
+<div class="card">
+<h2>🔎 काम खोजें</h2>
+<input id="search" placeholder="काम खोजें: मजदूरी, ड्राइवर, किसान..." oninput="showJobs()">
+<select id="state" onchange="showJobs()">
+<option value="">सभी राज्य</option>
+<option>उत्तर प्रदेश</option>
+<option>बिहार</option>
+<option>दिल्ली</option>
+<option>महाराष्ट्र</option>
+<option>राजस्थान</option>
+<option>हरियाणा</option>
+<option>पंजाब</option>
+<option>मध्य प्रदेश</option>
+</select>
+<div id="jobs"></div>
+<p class="small">यह शुरुआती डेमो है। अभी असली नौकरी के विज्ञापन उपलब्ध नहीं हैं।</p>
+</div>
+
+<div class="card">
+<h2>📝 नौकरी पोस्ट करें</h2>
+<input id="title" placeholder="काम का नाम">
+<input id="company" placeholder="ठेकेदार / कंपनी का नाम">
+<select id="jobstate">
+<option value="">राज्य चुनें</option>
+<option>उत्तर प्रदेश</option><option>बिहार</option>
+<option>दिल्ली</option><option>महाराष्ट्र</option>
+<option>राजस्थान</option><option>हरियाणा</option>
+<option>पंजाब</option><option>मध्य प्रदेश</option>
+</select>
+<input id="district" placeholder="जिला और क्षेत्र">
+<input id="salary" placeholder="मजदूरी (जैसे ₹500 प्रतिदिन)">
+<input id="phone" type="tel" placeholder="संपर्क मोबाइल नंबर">
+<textarea id="details" placeholder="काम की जानकारी और जरूरी शर्तें"></textarea>
+<button onclick="addJob()">नौकरी पोस्ट करें</button>
+<p class="small">डेमो में पोस्ट केवल इसी ब्राउज़र में अस्थायी रूप से दिखेंगी। अभी सर्वर या OTP लॉगिन नहीं जुड़ा है।</p>
+</div>
+</div>
+<script>
+let jobs=[];
+function showJobs(){
+let q=document.getElementById('search').value.toLowerCase();
+let s=document.getElementById('state').value;
+let list=jobs.filter(j=>(j.title+' '+j.district+' '+j.details).toLowerCase().includes(q)&&(!s||j.state===s));
+document.getElementById('jobs').innerHTML=list.map(j=>`<div class="card job"><h3>${escapeText(j.title)}</h3><p>${escapeText(j.state)} — ${escapeText(j.district)}</p><p>मजदूरी: ${escapeText(j.salary)}</p><p>${escapeText(j.details)}</p><p>ठेकेदार: ${escapeText(j.company)}</p></div>`).join('')||'<p>अभी कोई नौकरी नहीं मिली।</p>';
+}
+function escapeText(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function addJob(){
+let title=document.getElementById('title').value.trim();
+let company=document.getElementById('company').value.trim();
+let state=document.getElementById('jobstate').value;
+let district=document.getElementById('district').value.trim();
+let salary=document.getElementById('salary').value.trim();
+let phone=document.getElementById('phone').value.trim();
+let details=document.getElementById('details').value.trim();
+if(!title||!company||!state||!district||!salary||!phone){alert('कृपया सभी जरूरी जानकारी भरें।');return;}
+jobs.unshift({title,company,state,district,salary,phone,details});
+showJobs();
+alert('डेमो में नौकरी जुड़ गई है। अभी यह दूसरे उपयोगकर्ताओं को नहीं दिखेगी।');
+}
+showJobs();
+</script>
+</body>
+</html>
