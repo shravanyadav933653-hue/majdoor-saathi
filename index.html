@@ -2,112 +2,66 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>मजदूर साथी | Majdoor Saathi</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>मजदूर साथी</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f1f5f9;
+  color:#222
 }
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f1f5f9;
-  color: #222;
+header{
+  background:#087443;
+  color:white;
+  text-align:center;
+  padding:20px 10px
 }
-
-header {
-  background: #087443;
-  color: white;
-  padding: 22px 12px;
-  text-align: center;
+.container{max-width:750px;margin:auto;padding:12px}
+.card{
+  background:white;
+  padding:16px;
+  margin:14px 0;
+  border-radius:12px;
+  box-shadow:0 2px 8px #0001
 }
-
-header h1 {
-  margin: 0 0 8px;
+h2{color:#087443;font-size:21px}
+input,select,textarea,button{
+  width:100%;
+  padding:12px;
+  margin:7px 0;
+  font-size:16px;
+  border-radius:7px
 }
-
-header p {
-  margin: 0;
+input,select,textarea{border:1px solid #bbb}
+button{
+  border:0;
+  background:#087443;
+  color:white;
+  font-weight:bold
 }
-
-.container {
-  max-width: 750px;
-  margin: auto;
-  padding: 12px;
+button:disabled{background:#888}
+.job{
+  border-left:5px solid #087443;
+  background:#fff;
+  padding:12px;
+  margin:12px 0;
+  overflow-wrap:anywhere
 }
-
-.card {
-  background: white;
-  padding: 16px;
-  margin: 14px 0;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px #0001;
+.small{font-size:13px;color:#555}
+.hidden{display:none!important}
+#loginStatus,#status{
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  line-height:1.5
 }
-
-h2 {
-  color: #087443;
-  font-size: 21px;
+#recaptcha-container{
+  margin:12px 0;
+  overflow-x:auto
 }
-
-input, select, textarea, button {
-  width: 100%;
-  padding: 12px;
-  margin: 7px 0;
-  font-size: 16px;
-  border-radius: 7px;
-}
-
-input, select, textarea {
-  border: 1px solid #bbb;
-  background: white;
-}
-
-button {
-  border: none;
-  background: #087443;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button:disabled {
-  background: #888;
-}
-
-.job {
-  border: 1px solid #ddd;
-  border-left: 5px solid #087443;
-  border-radius: 8px;
-  padding: 12px;
-  margin: 12px 0;
-  overflow-wrap: anywhere;
-}
-
-.job h3 {
-  margin-top: 0;
-}
-
-.small {
-  font-size: 13px;
-  color: #555;
-}
-
-.hidden {
-  display: none;
-}
-
-#status {
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-}
-
-footer {
-  text-align: center;
-  padding: 20px;
-  color: #555;
-}
+footer{text-align:center;padding:20px}
 </style>
 </head>
 
@@ -116,197 +70,151 @@ footer {
 <header>
   <h1>🤝 मजदूर साथी</h1>
   <p>काम ढूँढना हुआ आसान!</p>
-  <p>मजदूर और ठेकेदार के बीच एक भरोसेमंद संपर्क</p>
+  <p>मजदूर और ठेकेदार के बीच संपर्क</p>
 </header>
 
 <main class="container">
 
-  <section class="card">
-    <h2>📱 मोबाइल से लॉगिन</h2>
+<section class="card">
+  <h2>📱 मोबाइल से लॉगिन</h2>
 
-    <p id="loginMessage">नौकरी देखने के लिए लॉगिन जरूरी नहीं है। नौकरी पोस्ट करने के लिए मोबाइल लॉगिन करें।</p>
+  <p id="loginMessage">
+    नौकरी देखने के लिए लॉगिन जरूरी नहीं है।
+    नौकरी पोस्ट करने के लिए मोबाइल लॉगिन करें।
+  </p>
 
-    <div id="loginForm">
-      <label for="loginPhone">मोबाइल नंबर</label>
-      <input
-        id="loginPhone"
-        type="tel"
-        inputmode="numeric"
-        maxlength="10"
-        placeholder="10 अंकों का मोबाइल नंबर"
-      >
-
-      <button id="sendOtpButton" type="button">
-        OTP भेजें
-      </button>
-
-      <div id="otpSection" class="hidden">
-        <label for="otpCode">SMS में आया OTP</label>
-        <input
-          id="otpCode"
-          type="text"
-          inputmode="numeric"
-          maxlength="6"
-          placeholder="OTP डालें"
-        >
-
-        <button id="verifyOtpButton" type="button">
-          OTP सत्यापित करें
-        </button>
-      </div>
-
-      <div id="recaptcha-container"></div>
-    </div>
-
-    <button id="logoutButton" class="hidden" type="button">
-      लॉगआउट
-    </button>
-  </section>
-
-  <section class="card">
-    <h2>🔎 नौकरी खोजें</h2>
-
-    <input
-      id="searchInput"
-      type="search"
-      placeholder="काम, जिला या राज्य खोजें"
-    >
-
-    <select id="stateFilter">
-      <option value="">सभी राज्य</option>
-      <option>Uttar Pradesh</option>
-      <option>Bihar</option>
-      <option>Delhi</option>
-      <option>Maharashtra</option>
-      <option>Rajasthan</option>
-      <option>Madhya Pradesh</option>
-      <option>Haryana</option>
-      <option>Punjab</option>
-      <option>Gujarat</option>
-      <option>Uttarakhand</option>
-      <option>Jharkhand</option>
-      <option>Chhattisgarh</option>
-      <option>West Bengal</option>
-      <option>Himachal Pradesh</option>
-      <option>Haryana</option>
-      <option>Odisha</option>
-      <option>Assam</option>
-      <option>Karnataka</option>
-      <option>Kerala</option>
-      <option>Tamil Nadu</option>
-      <option>Telangana</option>
-      <option>Andhra Pradesh</option>
-      <option>Goa</option>
-      <option>Manipur</option>
-      <option>Meghalaya</option>
-      <option>Mizoram</option>
-      <option>Nagaland</option>
-      <option>Tripura</option>
-      <option>Sikkim</option>
-      <option>Arunachal Pradesh</option>
-      <option>Jammu and Kashmir</option>
-      <option>Ladakh</option>
-      <option>Chandigarh</option>
-      <option>Puducherry</option>
-      <option>Andaman and Nicobar Islands</option>
-      <option>Dadra and Nagar Haveli and Daman and Diu</option>
-      <option>Lakshadweep</option>
-    </select>
-
-    <p id="jobCount">नौकरियाँ लोड हो रही हैं...</p>
-    <div id="jobsList"></div>
-  </section>
-
-  <section class="card">
-    <h2>🏗️ नई नौकरी पोस्ट करें</h2>
+  <div id="loginForm">
+    <label>10 अंकों का मोबाइल नंबर</label>
+    <input id="loginPhone"
+      type="tel"
+      inputmode="numeric"
+      maxlength="10"
+      placeholder="जैसे 9876543210">
 
     <p class="small">
-      नौकरी पोस्ट करने के लिए पहले मोबाइल OTP से लॉगिन करें।
-      पोस्ट करने से पहले संपर्क नंबर प्रकाशित करने की अनुमति जरूर लें।
+      पहले नीचे Google reCAPTCHA पूरा करें,
+      फिर OTP भेजें।
     </p>
 
-    <form id="jobForm">
-      <label for="jobTitle">काम का नाम</label>
-      <input
-        id="jobTitle"
-        required
-        maxlength="100"
-        placeholder="जैसे: राजमिस्त्री, किसान मजदूर, ड्राइवर"
-      >
+    <div id="recaptcha-container"></div>
 
-      <label for="company">ठेकेदार या कंपनी का नाम</label>
-      <input
-        id="company"
-        required
-        maxlength="100"
-        placeholder="नाम लिखें"
-      >
+    <button id="sendOtpButton" type="button">
+      OTP भेजें
+    </button>
 
-      <label for="jobState">राज्य</label>
-      <input
-        id="jobState"
-        required
-        maxlength="80"
-        placeholder="जैसे: Uttar Pradesh"
-      >
-
-      <label for="district">जिला और क्षेत्र</label>
-      <input
-        id="district"
-        required
-        maxlength="100"
-        placeholder="जैसे: Lucknow, Aliganj"
-      >
-
-      <label for="salary">मजदूरी या वेतन</label>
-      <input
-        id="salary"
-        required
-        maxlength="80"
-        placeholder="जैसे: ₹500 प्रतिदिन"
-      >
-
-      <label for="contactPhone">संपर्क मोबाइल नंबर</label>
-      <input
-        id="contactPhone"
-        type="tel"
+    <div id="otpSection" class="hidden">
+      <label>SMS में आया 6 अंकों का OTP</label>
+      <input id="otpCode"
+        type="text"
         inputmode="numeric"
-        maxlength="10"
-        required
-        placeholder="10 अंकों का नंबर"
-      >
+        maxlength="6"
+        placeholder="OTP डालें">
 
-      <label for="details">काम की जानकारी</label>
-      <textarea
-        id="details"
-        rows="4"
-        maxlength="1000"
-        required
-        placeholder="कितने मजदूर चाहिए, काम कब शुरू होगा आदि"
-      ></textarea>
-
-      <button id="postButton" type="submit">
-        नौकरी पोस्ट करें
+      <button id="verifyOtpButton" type="button">
+        OTP सत्यापित करें
       </button>
-    </form>
-  </section>
+    </div>
 
-  <section class="card">
-    <p id="status" role="status">वेबसाइट शुरू हो रही है...</p>
-  </section>
+    <p id="loginStatus" role="status"></p>
+  </div>
+
+  <button id="logoutButton" class="hidden" type="button">
+    लॉगआउट
+  </button>
+</section>
+
+<section class="card">
+  <h2>🔎 नौकरी खोजें</h2>
+
+  <input id="searchInput"
+    type="search"
+    placeholder="काम, जिला या राज्य खोजें">
+
+  <select id="stateFilter">
+    <option value="">सभी राज्य</option>
+    <option>Uttar Pradesh</option>
+    <option>Bihar</option>
+    <option>Delhi</option>
+    <option>Maharashtra</option>
+    <option>Rajasthan</option>
+    <option>Madhya Pradesh</option>
+    <option>Haryana</option>
+    <option>Punjab</option>
+    <option>Gujarat</option>
+    <option>Uttarakhand</option>
+    <option>Jharkhand</option>
+    <option>Chhattisgarh</option>
+    <option>West Bengal</option>
+    <option>Odisha</option>
+    <option>Assam</option>
+    <option>Karnataka</option>
+    <option>Kerala</option>
+    <option>Tamil Nadu</option>
+    <option>Telangana</option>
+    <option>Andhra Pradesh</option>
+  </select>
+
+  <p id="jobCount">नौकरियाँ लोड हो रही हैं...</p>
+  <div id="jobsList"></div>
+</section>
+
+<section class="card">
+  <h2>🏗️ नई नौकरी पोस्ट करें</h2>
+
+  <p class="small">
+    नौकरी पोस्ट करने के लिए पहले मोबाइल OTP से लॉगिन करें।
+    संपर्क नंबर प्रकाशित करने की अनुमति लें।
+  </p>
+
+  <form id="jobForm">
+    <label>काम का नाम</label>
+    <input id="jobTitle" required maxlength="100"
+      placeholder="जैसे राजमिस्त्री, किसान मजदूर">
+
+    <label>ठेकेदार या कंपनी का नाम</label>
+    <input id="company" required maxlength="100">
+
+    <label>राज्य</label>
+    <input id="jobState" required maxlength="80"
+      placeholder="जैसे Uttar Pradesh">
+
+    <label>जिला और क्षेत्र</label>
+    <input id="district" required maxlength="100"
+      placeholder="जैसे Lucknow, Aliganj">
+
+    <label>मजदूरी या वेतन</label>
+    <input id="salary" required maxlength="80"
+      placeholder="जैसे ₹500 प्रतिदिन">
+
+    <label>संपर्क मोबाइल नंबर</label>
+    <input id="contactPhone" type="tel"
+      inputmode="numeric" maxlength="10" required>
+
+    <label>काम की जानकारी</label>
+    <textarea id="details" rows="4"
+      maxlength="1000" required
+      placeholder="काम कब शुरू होगा और कितने मजदूर चाहिए"></textarea>
+
+    <button id="postButton" type="submit">
+      नौकरी पोस्ट करें
+    </button>
+  </form>
+</section>
+
+<section class="card">
+  <p id="status" role="status">वेबसाइट शुरू हो रही है...</p>
+</section>
 
 </main>
 
 <footer>
-  <p>🤝 Majdoor Saathi</p>
+  <p>🤝 मजदूर साथी</p>
   <p>मजदूरों को काम, काम को मजदूर</p>
 </footer>
 
 <script type="module">
-
-import {
-  initializeApp
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 
 import {
   getAuth,
@@ -340,26 +248,74 @@ const db = getFirestore(app);
 
 const $ = id => document.getElementById(id);
 
-let currentUser = null;
-let confirmationResult = null;
 let verifier = null;
+let confirmationResult = null;
+let currentUser = null;
 let allJobs = [];
 
 function status(message) {
   $("status").textContent = message;
 }
 
+function loginStatus(message) {
+  $("loginStatus").textContent = message;
+}
+
 function clean(value) {
   return String(value ?? "");
 }
 
-function addText(parent, tag, value) {
-  const element = document.createElement(tag);
-  element.textContent = value;
-  parent.appendChild(element);
-  return element;
+/* Firebase error को समझने योग्य संदेश में बदलना */
+function explainError(error) {
+  const code = error?.code || "";
+  const messages = {
+    "auth/invalid-phone-number":
+      "मोबाइल नंबर सही नहीं है। 10 अंकों का नंबर डालें।",
+    "auth/too-many-requests":
+      "बहुत बार कोशिश की गई है। कुछ समय बाद फिर कोशिश करें।",
+    "auth/quota-exceeded":
+      "Firebase की SMS सीमा पूरी हो सकती है। Firebase Console जाँचें।",
+    "auth/captcha-check-failed":
+      "Google reCAPTCHA जाँच असफल हुई। पेज Refresh करके फिर कोशिश करें।",
+    "auth/invalid-app-credential":
+      "Firebase ऐप या reCAPTCHA सत्यापन में समस्या है।",
+    "auth/operation-not-allowed":
+      "Firebase में Phone Authentication चालू नहीं है।",
+    "auth/network-request-failed":
+      "इंटरनेट कनेक्शन जाँचें और फिर कोशिश करें।",
+    "auth/billing-not-enabled":
+      "Firebase प्रोजेक्ट की बिलिंग या SMS सेटिंग जाँचें।"
+  };
+
+  return (messages[code] || error?.message || "अज्ञात त्रुटि")
+    + "\nError code: " + (code || "unknown");
 }
 
+/* पेज खुलते ही दिखाई देने वाला reCAPTCHA तैयार करें */
+async function setupRecaptcha() {
+  try {
+    loginStatus("Google reCAPTCHA लोड हो रहा है...");
+
+    verifier = new RecaptchaVerifier(auth, "recaptcha-container", {
+      size: "normal",
+      callback: () => {
+        loginStatus("Google सत्यापन पूरा हुआ। अब OTP भेजें।");
+      },
+      "expired-callback": () => {
+        loginStatus("Google सत्यापन समाप्त हो गया। दोबारा सत्यापित करें।");
+      }
+    });
+
+    await verifier.render();
+    loginStatus("पहले Google reCAPTCHA पूरा करें, फिर OTP भेजें।");
+
+  } catch (error) {
+    console.error("reCAPTCHA error:", error);
+    loginStatus("reCAPTCHA शुरू नहीं हुआ:\n" + explainError(error));
+  }
+}
+
+/* नौकरी की सूची */
 function showJobs() {
   const list = $("jobsList");
   list.replaceChildren();
@@ -368,27 +324,21 @@ function showJobs() {
   const state = $("stateFilter").value.trim().toLowerCase();
 
   const filtered = allJobs.filter(job => {
-    const searchable = [
-      job.title,
-      job.company,
-      job.state,
-      job.district,
-      job.salary,
-      job.details
+    const text = [
+      job.title, job.company, job.state,
+      job.district, job.salary, job.details
     ].map(clean).join(" ").toLowerCase();
 
-    const matchesSearch = !search || searchable.includes(search);
-    const matchesState =
-      !state || clean(job.state).toLowerCase() === state;
-
-    return matchesSearch && matchesState;
+    return (!search || text.includes(search)) &&
+      (!state || clean(job.state).toLowerCase() === state);
   });
 
-  $("jobCount").textContent =
-    "कुल " + filtered.length + " नौकरी मिलीं";
+  $("jobCount").textContent = "कुल " + filtered.length + " नौकरी मिलीं";
 
-  if (filtered.length === 0) {
-    addText(list, "p", "अभी इस खोज से मेल खाने वाली नौकरी नहीं मिली।");
+  if (!filtered.length) {
+    const p = document.createElement("p");
+    p.textContent = "अभी कोई मेल खाती नौकरी नहीं मिली।";
+    list.appendChild(p);
     return;
   }
 
@@ -396,26 +346,27 @@ function showJobs() {
     const card = document.createElement("article");
     card.className = "job";
 
-    addText(card, "h3", clean(job.title) || "काम उपलब्ध");
+    const title = document.createElement("h3");
+    title.textContent = clean(job.title) || "काम उपलब्ध";
+    card.appendChild(title);
 
-    addText(card, "p", "🏢 ठेकेदार: " + clean(job.company));
-    addText(card, "p", "📍 स्थान: " + clean(job.district) + ", " + clean(job.state));
-    addText(card, "p", "💰 मजदूरी: " + clean(job.salary));
-
-    if (job.details) {
-      addText(card, "p", "📝 जानकारी: " + clean(job.details));
-    }
+    [
+      "🏢 ठेकेदार: " + clean(job.company),
+      "📍 स्थान: " + clean(job.district) + ", " + clean(job.state),
+      "💰 मजदूरी: " + clean(job.salary),
+      job.details ? "📝 जानकारी: " + clean(job.details) : ""
+    ].filter(Boolean).forEach(text => {
+      const p = document.createElement("p");
+      p.textContent = text;
+      card.appendChild(p);
+    });
 
     if (job.phone) {
-      const phone = clean(job.phone);
-
-      const link = document.createElement("a");
-      link.href = "tel:" + phone;
-      link.textContent = "📞 संपर्क करें";
-      link.style.fontWeight = "bold";
-      link.style.color = "#087443";
-
-      card.appendChild(link);
+      const a = document.createElement("a");
+      a.href = "tel:" + clean(job.phone);
+      a.textContent = "📞 संपर्क करें";
+      a.style.color = "#087443";
+      card.appendChild(a);
     }
 
     list.appendChild(card);
@@ -425,44 +376,40 @@ function showJobs() {
 $("searchInput").addEventListener("input", showJobs);
 $("stateFilter").addEventListener("change", showJobs);
 
-onSnapshot(
-  collection(db, "jobs"),
-  snapshot => {
-    allJobs = snapshot.docs.map(document => ({
-      id: document.id,
-      ...document.data()
-    }));
+/* Firestore से नौकरियाँ पढ़ें */
+onSnapshot(collection(db, "jobs"), snapshot => {
+  allJobs = snapshot.docs.map(d => ({
+    id: d.id,
+    ...d.data()
+  }));
 
-    showJobs();
-    status("नौकरियों की सूची अपडेट हो गई है।");
-  },
-  error => {
-    console.error(error);
-    status("नौकरियाँ लोड नहीं हुईं। Firebase Firestore Rules जाँचें।");
-  }
-);
+  showJobs();
+  status("नौकरियों की सूची अपडेट हो गई है।");
 
+}, error => {
+  console.error("Firestore error:", error);
+  status("नौकरियाँ लोड नहीं हुईं: " + error.message);
+});
+
+/* OTP भेजें */
 $("sendOtpButton").addEventListener("click", async () => {
   const number = $("loginPhone").value.trim();
 
   if (!/^[6-9]\d{9}$/.test(number)) {
-    alert("कृपया सही 10 अंकों का भारतीय मोबाइल नंबर डालें।");
+    loginStatus("सही 10 अंकों का भारतीय मोबाइल नंबर डालें।");
     return;
   }
 
+  if (!verifier) {
+    loginStatus("Google reCAPTCHA तैयार नहीं है। पेज Refresh करें।");
+    return;
+  }
+
+  const button = $("sendOtpButton");
+  button.disabled = true;
+  loginStatus("सत्यापन जाँचा जा रहा है और OTP भेजने की कोशिश हो रही है...");
+
   try {
-    $("sendOtpButton").disabled = true;
-
-    if (!verifier) {
-      verifier = new RecaptchaVerifier(
-        auth,
-        "recaptcha-container",
-        {}
-      );
-
-      await verifier.render();
-    }
-
     confirmationResult = await signInWithPhoneNumber(
       auth,
       "+91" + number,
@@ -470,48 +417,56 @@ $("sendOtpButton").addEventListener("click", async () => {
     );
 
     $("otpSection").classList.remove("hidden");
-    status("OTP भेज दिया गया है। अपना SMS देखें।");
+    loginStatus("Firebase ने OTP अनुरोध स्वीकार किया। SMS देखें।");
 
   } catch (error) {
-    console.error(error);
+    console.error("OTP error:", error);
+    loginStatus("OTP नहीं भेजा जा सका:\n" + explainError(error));
 
-    status("OTP नहीं भेजा जा सका: " + error.message);
-
-    if (verifier) {
-      verifier.clear();
-      verifier = null;
+    try {
+      if (verifier) verifier.clear();
+    } catch (e) {
+      console.error(e);
     }
 
+    verifier = null;
+    $("recaptcha-container").replaceChildren();
+    await setupRecaptcha();
+
   } finally {
-    $("sendOtpButton").disabled = false;
+    button.disabled = false;
   }
 });
 
+/* OTP सत्यापित करें */
 $("verifyOtpButton").addEventListener("click", async () => {
   const code = $("otpCode").value.trim();
 
   if (!confirmationResult) {
-    alert("पहले OTP मँगवाएँ।");
+    loginStatus("पहले OTP भेजें।");
     return;
   }
 
   if (!/^\d{6}$/.test(code)) {
-    alert("6 अंकों का OTP डालें।");
+    loginStatus("6 अंकों का OTP डालें।");
     return;
   }
 
+  const button = $("verifyOtpButton");
+  button.disabled = true;
+
   try {
-    $("verifyOtpButton").disabled = true;
     await confirmationResult.confirm(code);
-    status("लॉगिन सफल हुआ!");
+    loginStatus("लॉगिन सफल हुआ!");
   } catch (error) {
-    console.error(error);
-    status("OTP सत्यापित नहीं हुआ। OTP जाँचें और दोबारा कोशिश करें।");
+    console.error("OTP verification error:", error);
+    loginStatus("OTP सत्यापित नहीं हुआ:\n" + explainError(error));
   } finally {
-    $("verifyOtpButton").disabled = false;
+    button.disabled = false;
   }
 });
 
+/* लॉगिन की स्थिति */
 onAuthStateChanged(auth, user => {
   currentUser = user;
 
@@ -520,30 +475,32 @@ onAuthStateChanged(auth, user => {
 
   $("loginMessage").textContent = user
     ? "लॉगिन सफल! अब आप नौकरी पोस्ट कर सकते हैं।"
-    : "नौकरी देखने के लिए लॉगिन जरूरी नहीं है। नौकरी पोस्ट करने के लिए मोबाइल लॉगिन करें।";
+    : "नौकरी देखने के लिए लॉगिन जरूरी नहीं है।";
 });
 
+/* लॉगआउट */
 $("logoutButton").addEventListener("click", async () => {
   try {
     await signOut(auth);
-    status("आप लॉगआउट हो गए हैं।");
+    loginStatus("आप लॉगआउट हो गए हैं।");
   } catch (error) {
-    status("लॉगआउट नहीं हुआ: " + error.message);
+    loginStatus("लॉगआउट नहीं हुआ:\n" + explainError(error));
   }
 });
 
+/* नई नौकरी पोस्ट करें */
 $("jobForm").addEventListener("submit", async event => {
   event.preventDefault();
 
   if (!currentUser) {
-    alert("नौकरी पोस्ट करने के लिए पहले मोबाइल OTP से लॉगिन करें।");
+    alert("पहले मोबाइल OTP से लॉगिन करें।");
     return;
   }
 
   const phone = $("contactPhone").value.trim();
 
   if (!/^[6-9]\d{9}$/.test(phone)) {
-    alert("संपर्क के लिए सही 10 अंकों का भारतीय मोबाइल नंबर डालें।");
+    alert("संपर्क के लिए सही 10 अंकों का मोबाइल नंबर डालें।");
     return;
   }
 
@@ -559,29 +516,24 @@ $("jobForm").addEventListener("submit", async event => {
     createdAt: serverTimestamp()
   };
 
+  const button = $("postButton");
+  button.disabled = true;
+
   try {
-    $("postButton").disabled = true;
-
     await addDoc(collection(db, "jobs"), job);
-
     $("jobForm").reset();
     status("नौकरी सफलतापूर्वक पोस्ट हो गई!");
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
+    window.scrollTo({top: 0, behavior: "smooth"});
   } catch (error) {
-    console.error(error);
-
-    status(
-      "नौकरी सेव नहीं हुई। Firestore Rules जाँचें। विवरण: " +
-      error.message
-    );
-
+    console.error("Job posting error:", error);
+    status("नौकरी पोस्ट नहीं हुई: " + error.message);
   } finally {
-    $("postButton").disabled = false;
+    button.disabled = false;
   }
 });
 
+/* पेज लोड होने पर Google reCAPTCHA तैयार करें */
+setupRecaptcha();
 </script>
 
 </body>
